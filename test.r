@@ -41,5 +41,3 @@ udpipe('Het Olster veer is nog niet gestremd en blijft volgens de normale dienst
 udpipe('Het Olster veer is nog niet gestremd en blijft varen, volgens de woordvoerder', 'dutch')|> add_column(next_start_quote=F)  |> annotate_tqueries("quote", queries) |> plot_tree(lemma, upos, annotation='quote')
 
 
-
-

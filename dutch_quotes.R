@@ -90,4 +90,11 @@ queries = list(
 
 replace_quotes = function(text) text |> str_replace_all("[“”„‟«»]", '"') |> str_replace_all('[‘’‚‛‹›]', "'")
 
-
+add_next_quotes = function(tokens) {
+  next_quotes = tokens |> select(doc_id, sentence_id, sentence) |> unique() |>  
+    mutate(start_quote=str_detect(sentence, "^\\s*['\"“”‘’‚‛„‟‹›«»]"),
+          next_start_quote=lead(start_quote) & lead(doc_id) == doc_id) |>
+    select(doc_id, sentence_id, next_start_quote) 
+  inner_join(tokens, next_quotes)  |> select(-sentence, sentence=sentence_id)
+}
+  
